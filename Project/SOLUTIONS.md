@@ -5,6 +5,7 @@ Structure scripts to
 * Interact with the ballot factory
 * Query proposals for each ballot
 * Operate scripts
+Run the scripts with a few set of proposals, play around with token balances, cast and delegate votes, create ballots from snapshots, interact with the ballots and inspect results
 
 Note: Add .env file with your private key details before running the script
 
@@ -34,7 +35,7 @@ yarn run ts-node --file ./scripts/delegate.ts
 
 ```
 
-<img src"./delegate.png" alt="delegate screenshot">
+<img src"delegate.png" alt="delegate screenshot">
 
 <hr />
 
@@ -50,7 +51,7 @@ yarn run ts-node --file ./scripts/deployBallot.ts "p1" "p2" "p3"
 
 ```
 
-<img src"./deployBallot.png" alt="deploy Ballot">
+<img src"deployBallot.png" alt="deploy Ballot">
 
 ### Cast Vote
 
@@ -67,7 +68,7 @@ yarn run ts-node --file ./scripts/deployBallot.ts "p1" "p2" "p3"
 yarn run ts-node --file ./scripts/castVote.ts "1" "100"
 
 ```
-<img src"./castVote.png" alt="cast Vote">
+<img src"castVote.png" alt="cast Vote">
 
 ### Query proposals and voting results
 
@@ -81,3 +82,4 @@ yarn run ts-node --file ./scripts/castVote.ts "1" "100"
 yarn run ts-node --file ./scripts/queryProposals.ts 
 
 ```
+<img src"queryProposals.png" alt="query proposals">
