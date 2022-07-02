@@ -1,20 +1,21 @@
 import { ethers } from "ethers";
 import "dotenv/config";
 import * as tokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
-
+import fs from "fs";
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
-const EXPOSED_KEY =
-  "8da4ef21b864d2cc526dbdb2a120bd2874c36c9d0a1fb7f8c63d7f7a8b41de8f";
+const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
 
 async function main() {
   const wallet =
     process.env.MNEMONIC && process.env.MNEMONIC.length > 0
       ? ethers.Wallet.fromMnemonic(process.env.MNEMONIC)
-      : new ethers.Wallet(process.env.PRIVATE_KEY ?? EXPOSED_KEY);
+      : new ethers.Wallet(PRIVATE_KEY);
   console.log(`Using address ${wallet.address}`);
-  //const provider = ethers.providers.getDefaultProvider("ropsten");
-  const provider = new ethers.providers.JsonRpcProvider(process.env.ROPSTEN_URL);
+  // const provider = ethers.providers.getDefaultProvider("ropsten");
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.ROPSTEN_URL
+  );
   const signer = wallet.connect(provider);
   const balanceBN = await signer.getBalance();
   const balance = Number(ethers.utils.formatEther(balanceBN));
@@ -31,9 +32,18 @@ async function main() {
   );
   const tokenContract = await tokenFactory.deploy();
   console.log("Awaiting confirmations");
-  await tokenContract.deployed();
+  const tx = await tokenContract.deployed();
   console.log("Completed");
   console.log(`Contract deployed at ${tokenContract.address}`);
+  const registry = {
+    tokenAddress: tokenContract.address,
+    network: "ropsten",
+  };
+  const data = JSON.stringify(registry);
+  fs.writeFile("registry.json", data, (err: any) => {
+    if (err) throw err;
+    console.log("Token contract address written to file");
+  });
 }
 
 main().catch((error) => {

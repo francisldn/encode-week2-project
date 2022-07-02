@@ -1,11 +1,11 @@
 import { ethers } from "ethers";
 import "dotenv/config";
 import * as ballotJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
-
+import fs from "fs";
+import token from "../registry.json"
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
-const EXPOSED_KEY =
-  "8da4ef21b864d2cc526dbdb2a120bd2874c36c9d0a1fb7f8c63d7f7a8b41de8f";
+const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
 
 function convertStringArrayToBytes32(array: string[]) {
   const bytes32Array = [];
@@ -19,7 +19,7 @@ async function main() {
   const wallet =
     process.env.MNEMONIC && process.env.MNEMONIC.length > 0
       ? ethers.Wallet.fromMnemonic(process.env.MNEMONIC)
-      : new ethers.Wallet(process.env.PRIVATE_KEY ?? EXPOSED_KEY);
+      : new ethers.Wallet(PRIVATE_KEY);
   console.log(`Using address ${wallet.address}`);
   const provider = ethers.providers.getDefaultProvider("ropsten");
   const signer = wallet.connect(provider);
@@ -30,7 +30,7 @@ async function main() {
     throw new Error("Not enough ether");
   }
   console.log("Deploying Ballot contract");
-  const tokenAddress = "0x4337785FcD690BaA3C6C151B1b80747423683aBD";
+  const tokenAddress = token.tokenAddress;
   console.log("Proposals: ");
   const proposals = process.argv.slice(2);
   if (proposals.length < 2) throw new Error("Not enough proposals provided");
@@ -47,9 +47,19 @@ async function main() {
     tokenAddress
   );
   console.log("Awaiting confirmations");
-  await ballotContract.deployed();
+  const tx = await ballotContract.deployed();
   console.log("Completed");
   console.log(`Contract deployed at ${ballotContract.address}`);
+  const registry = {
+    ballotAddress: ballotContract.address,
+    tokenAddress:tokenAddress,
+    network: "ropsten"
+  };
+  const data = JSON.stringify(registry);
+  fs.writeFile("registry.json", data, (err: any) => {
+    if (err) throw err;
+    console.log("Ballot contract address written to file");
+  });
 }
 
 main().catch((error) => {
