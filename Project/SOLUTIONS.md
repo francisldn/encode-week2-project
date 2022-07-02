@@ -1,5 +1,6 @@
 # Week 2 Project - Group 16
 
+### Project Requirements
 Structure scripts to
 * Deploy everything
 * Interact with the ballot factory
@@ -7,7 +8,7 @@ Structure scripts to
 * Operate scripts
 Run the scripts with a few set of proposals, play around with token balances, cast and delegate votes, create ballots from snapshots, interact with the ballots and inspect results
 
-Note: Add .env file with your private key details before running the script
+<em>Note: Add .env file with your private key details before running the script</em>
 
 <hr />
 
@@ -53,6 +54,8 @@ yarn run ts-node --file ./scripts/deployBallot.ts "p1" "p2" "p3"
 
 <img src="./deployBallot.png" alt="deploy Ballot">
 
+<hr />
+
 ### Cast Vote
 
 * Token contract address: ``0x2b5EFb14004036e57e0E4C7917F6E060D9A5F476``
@@ -69,6 +72,8 @@ yarn run ts-node --file ./scripts/castVote.ts "1" "100"
 
 ```
 <img src="./castVote.png" alt="cast Vote">
+
+<hr />
 
 ### Query proposals and voting results
 
