@@ -35,7 +35,7 @@ yarn run ts-node --file ./scripts/delegate.ts
 
 ```
 
-<img src"delegate.png" alt="delegate screenshot">
+<img src="./delegate.png" alt="delegate screenshot">
 
 <hr />
 
@@ -51,7 +51,7 @@ yarn run ts-node --file ./scripts/deployBallot.ts "p1" "p2" "p3"
 
 ```
 
-<img src"deployBallot.png" alt="deploy Ballot">
+<img src="./deployBallot.png" alt="deploy Ballot">
 
 ### Cast Vote
 
@@ -68,7 +68,7 @@ yarn run ts-node --file ./scripts/deployBallot.ts "p1" "p2" "p3"
 yarn run ts-node --file ./scripts/castVote.ts "1" "100"
 
 ```
-<img src"castVote.png" alt="cast Vote">
+<img src="./castVote.png" alt="cast Vote">
 
 ### Query proposals and voting results
 
@@ -82,4 +82,4 @@ yarn run ts-node --file ./scripts/castVote.ts "1" "100"
 yarn run ts-node --file ./scripts/queryProposals.ts 
 
 ```
-<img src"queryProposals.png" alt="query proposals">
+<img src="./queryProposals.png" alt="query proposals">
